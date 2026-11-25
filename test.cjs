@@ -35,7 +35,7 @@ const base =
       fullPage: true,
     });
     if (width === 1440) {
-      await p.locator('#continue-camera').click();
+      await p.locator('.studio-invite a').click();
       await p.locator("#start-camera").click();
       await p.waitForFunction(
         () => document.querySelector("video").videoWidth > 0,
