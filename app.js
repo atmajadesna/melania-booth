@@ -66,12 +66,16 @@ function draw(canvas, imgs, o, illustration = false) {
   const c = canvas.getContext("2d");
   c.fillStyle = o.frame || theme.bg;
   c.fillRect(0, 0, w, canvas.height);
+  if([2,3,6,8,9].includes(o.theme)){c.save();c.globalAlpha=.22;c.fillStyle=theme.ink;for(let yy=16;yy<canvas.height;yy+=38){for(let xx=14;xx<w;xx+=38){if(o.theme===2)c.fillRect(xx,yy,18,18);else if(o.theme===9){c.font='18px Arial';c.fillText('✦',xx,yy);}else{c.beginPath();c.arc(xx,yy,o.theme===6?4:2,0,Math.PI*2);c.fill();}}}c.restore();}
   for (let i = 0; i < (grid ? 4 : n); i++) {
     let x = pad + (grid ? (i % 2) * (pw + gap) : 0),
       y = pad + (grid ? Math.floor(i / 2) : i) * (ph + gap);
     c.save();
     c.beginPath();
-    c.rect(x, y, pw, ph);
+    if(o.theme===0||o.theme===7){c.roundRect(x,y,pw,ph,[o.theme===7?pw/2:36,o.theme===7?pw/2:36,8,8]);}
+    else if(o.theme===9){c.roundRect(x,y,pw,ph,70);}
+    else if(o.theme===8){c.roundRect(x,y,pw,ph,24);}
+    else c.rect(x, y, pw, ph);
     c.clip();
     const im = imgs[i];
     if (im) {
