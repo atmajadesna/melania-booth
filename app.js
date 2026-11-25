@@ -7,6 +7,10 @@ const themes = [
   { name: "Pastel", bg: "#e2e9de", ink: "#415a4d", mark: "✿" },
   { name: "Monochrome", bg: "#252129", ink: "#ffffff", mark: "♡" },
   { name: "Film", bg: "#ead7bc", ink: "#483d30", mark: "✦" },
+  { name: "Cherry", bg: "#ffe2e8", ink: "#922b4f", mark: "♡" },
+  { name: "Garden", bg: "#e3efd9", ink: "#385d41", mark: "✿" },
+  { name: "Ocean", bg: "#d6ecfa", ink: "#285773", mark: "~" },
+  { name: "Lavender", bg: "#eee0fb", ink: "#654187", mark: "✦" },
 ];
 let photos = [],
   stream = null,
@@ -107,6 +111,7 @@ function draw(canvas, imgs, o, illustration = false) {
     if(o.theme===3){c.lineWidth=5;c.strokeStyle=['#c686ca','#61a6a1','#dc8a56','#db719b'][i%4];c.strokeRect(x-7,y-7,pw+14,ph+14);}
     if(o.theme===4){c.font='16px Arial';c.textAlign='right';c.fillText(String(i+1).padStart(2,'0'),x+pw,y+ph+18);}
     c.restore();
+    if(o.theme>=6){c.save();c.strokeStyle=theme.ink;c.fillStyle=theme.ink;c.lineWidth=3;for(let z=0;z<6;z++){let px=x+30+z*(pw-60)/5;if(o.theme===6){c.beginPath();c.arc(px,y-8,7,0,Math.PI*2);c.arc(px+11,y-5,7,0,Math.PI*2);c.fill();c.beginPath();c.moveTo(px,y-15);c.lineTo(px+7,y-25);c.stroke();}else if(o.theme===7){c.beginPath();c.ellipse(px,y-6,12,5,-.6,0,Math.PI*2);c.fill();}else if(o.theme===8){c.beginPath();c.arc(px,y-4,18,0,Math.PI);c.stroke();}else{c.font='24px Arial';c.fillText('✦',px,y+2);}}c.restore();}
     if (o.theme === 5) {
       c.fillStyle = theme.ink;
       for (let j = 0; j < 5; j++) {

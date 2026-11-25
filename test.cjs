@@ -20,7 +20,7 @@ const base =
     let errors = [];
     p.on("pageerror", (e) => errors.push(e.message));
     await p.goto(base, { waitUntil: "domcontentloaded" });
-    assert.equal(await p.locator(".theme-card").count(), 6);
+    assert.equal(await p.locator(".theme-card").count(), 10);
     assert.equal(
       await p.evaluate(() => document.documentElement.scrollWidth > innerWidth),
       false,
