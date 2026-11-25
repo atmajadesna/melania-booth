@@ -72,11 +72,12 @@ function draw(canvas, imgs, o, illustration = false) {
     const im = imgs[i];
     if (im) {
       c.filter = `${o.filter} brightness(${o.light}%)`;
-      const scale = Math.max(pw / im.width, ph / im.height);
+      const crop = illustration ? null : im.boothCrop;
+      const scale = Math.max(pw / im.width, ph / im.height) * (crop?.zoom || 1);
       c.drawImage(
         im,
-        x + (pw - im.width * scale) / 2,
-        y + (ph - im.height * scale) / 2,
+        x + (pw - im.width * scale) * (crop?.x ?? .5),
+        y + (ph - im.height * scale) * (crop?.y ?? .5),
         im.width * scale,
         im.height * scale,
       );
@@ -99,6 +100,12 @@ function draw(canvas, imgs, o, illustration = false) {
         y + ph / 2 + 45,
       );
     }
+    c.restore();
+    c.save(); c.strokeStyle=theme.ink; c.fillStyle=theme.ink;
+    if(o.theme===0){c.lineWidth=3;c.beginPath();c.ellipse(x+pw/2-19,y,22,9,-.4,0,Math.PI*2);c.ellipse(x+pw/2+19,y,22,9,.4,0,Math.PI*2);c.stroke();c.beginPath();c.moveTo(x+pw/2,y);c.lineTo(x+pw/2-16,y+30);c.moveTo(x+pw/2,y);c.lineTo(x+pw/2+16,y+30);c.stroke();}
+    if(o.theme===2){c.lineWidth=4;c.strokeRect(x-8,y-8,pw+16,ph+16);c.font='28px Arial';c.fillText('✦',x+12,y+28);c.fillText('✦',x+pw-40,y+ph-12);}
+    if(o.theme===3){c.lineWidth=5;c.strokeStyle=['#c686ca','#61a6a1','#dc8a56','#db719b'][i%4];c.strokeRect(x-7,y-7,pw+14,ph+14);}
+    if(o.theme===4){c.font='16px Arial';c.textAlign='right';c.fillText(String(i+1).padStart(2,'0'),x+pw,y+ph+18);}
     c.restore();
     if (o.theme === 5) {
       c.fillStyle = theme.ink;
@@ -291,7 +298,7 @@ async function capture() {
         photos = [...old];
         photos[index] = fresh[0];
       } else photos = fresh;
-      status("Manis! Pilih tema, atur caption, lalu unduh hasilnya.");
+      status("Foto berhasil diambil. Silakan pilih tema, sesuaikan keterangan, dan unduh hasilnya.");
     } else status("Sesi dibatalkan. Foto sebelumnya tetap ada.");
   } catch {
     status("Pengambilan foto gagal. Foto sebelumnya tetap ada.");
