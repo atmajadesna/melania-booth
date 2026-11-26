@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   function sync() {
     const paused = document.body.classList.contains('motion-paused') || reduced.matches;
-    control.textContent = paused ? 'Lanjutkan animasi' : 'Jeda animasi';
+    control.textContent = paused ? '▶' : 'Ⅱ';
+    control.setAttribute('aria-label', paused ? 'Lanjutkan gerakan galeri' : 'Hentikan sementara gerakan galeri');
     control.setAttribute('aria-pressed', String(paused));
     control.disabled = reduced.matches;
   }
